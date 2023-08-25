@@ -12,4 +12,4 @@ return true;
 }
 
 console.log(isUnique("water")); //true
-console.log(isUnique("waterbottle")) //false
+console.log(isUnique("waterbottle")) //false 

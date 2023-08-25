@@ -11,3 +11,6 @@ let containsDuplicate = function(nums) {
     }
     return false;
 };
+
+console.log(containsDuplicate("water")); //false
+console.log(containsDuplicate("waterbottle")) //true
