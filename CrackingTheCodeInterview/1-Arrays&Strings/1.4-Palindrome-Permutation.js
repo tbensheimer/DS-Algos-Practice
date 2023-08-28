@@ -1,25 +1,22 @@
 let isPalindromePermutation = (str) => {
-    let charMap = new Map();
-    let stringCount = 0;
-    for(let i = 0; i < str.length; i++) {   //time - O(N)
-        if(Number.isInteger(parseInt(str[i])) || str[i] == " ") { 
-            //skips numbers and spaces and doesn't count as part of string length
-           continue;
+    let hash = {};
+    let charCount = 0;
+
+    for(let i = 0; i < str.length; i++)  {      //time - O(N)
+        let c = str[i];     
+        if(c == " " || Number.isInteger(parseInt(c))) continue;
+        if(hash[c]) {
+            delete hash[c];
+        } else  {
+            hash[c] = true;
         }
-        if(charMap.get(str[i])) {
-            charMap.delete(str[i])
-        } else {
-            charMap.set(str[i], 1)          //space - O(N)
-        }
-            stringCount++;
+        charCount++;
     }
-    console.log(charMap)
-    if((stringCount % 2 == 0 && charMap.size == 0) ||
-       (stringCount % 2 == 1 && charMap.size == 1)) {
-        return true;
-       }
-    else {
-        return false;
+
+    if(charCount % 2 == 0) {
+        return Object.keys(hash).length == 0;
+    } else {
+        return Object.keys(hash).length == 1;
     }
 }
 
