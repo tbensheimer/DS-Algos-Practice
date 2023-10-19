@@ -5,7 +5,7 @@ let trap = (height) => {
     let r = height.length - 1;
     let lMax = 0;
     let rMax = 0;
-    let result = 0;
+    let res = 0;
 
     while(l < r) {                          //time - O(N);
         lMax = Math.max(lMax, height[l]);
@@ -16,7 +16,7 @@ let trap = (height) => {
 
         height[l] < height[r] ? l++ : r--;
     }
-    return result;
+    return res;
 }
 
 console.log(trap([4,2,0,3,2,5])) //9
