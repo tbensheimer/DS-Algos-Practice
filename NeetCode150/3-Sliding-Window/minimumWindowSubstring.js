@@ -1,37 +1,39 @@
 let minWindow = (s, t) => {
-    if(t.length > s.length) return "";
-    
+    let start = 0;
+    let substringStart = 0;
+    let minLength = Infinity;
     let hash = {};
-    
-    for(let i = 0; i < t.length; i++) {         //time O(N) for T
+    let matched = 0;
+
+    for(let i = 0; i < t.length; i++) {
         let c = t[i];
-        hash[c] = hash[c] ? hash[c] + 1 : 1;    //space O(N) for T
+        hash[c] = hash[c] ? hash[c] + 1 : 1;
     }
-    
-    let left = 0;
-    let right = 0;
-    let neededLength = Object.keys(hash).length;
-    let substring = "";
-    
-    while(right < s.length) {                   //time O(N) for S
-        let rightChar = s[right];
-        hash[rightChar]--;
-        if(hash[rightChar] == 0) neededLength--;    //space O(N) for s
-    
-        while(neededLength == 0) {
-            if(substring == "" || substring.length > right - left + 1) {
-                substring = s.slice(left, right + 1);
-            }
-    
-            let leftChar = s[left];
-            if(hash[leftChar] == 0) neededLength++;
-            hash[leftChar]++;
-    
-            left++;
+
+    for(let end = 0; end < s.length; end++) {
+        let rightC = s[end];
+        if(rightC in hash) {
+            hash[rightC]--;
+            if(hash[rightC] >= 0) matched++;
         }
-        right++;
+
+        while(matched == t.length) {
+            if(minLength > end - start + 1) {
+                minLength = end - start + 1;
+                substringStart = start;
+            }
+
+            let leftC = s[start];
+            if(leftC in hash) {
+                if(hash[leftC] >= 0) matched--;
+                hash[leftC]++;
+            }
+            start++;
+        }
     }
-    return substring;
+
+    if(minLength > s.length) return "";
+    return s.substring(substringStart, substringStart + minLength);
     }
     
     console.log(minWindow("ADOBECODEBANC", "ABC")) //"BANC"
