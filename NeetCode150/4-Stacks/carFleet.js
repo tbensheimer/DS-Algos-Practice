@@ -1,25 +1,23 @@
 let carFleet = (target, position, speed) => {
-    let len = position.length;
-    let map = new Map();
-    let fleets = 0;
-    let lastTime = -1;
+    let cars = [];
+    let carTime = [];
 
-    for(let i = 0; i < len; i++)  {
-        map.set(position[i], speed[i]);
+    for(let i = 0; i < position.length; i++) {
+        cars.push({
+            p: position[i],
+            s: speed[i]
+        });
     }
 
-    let sorted = [...map.keys()].sort((a,b) => b - a);
+    carTime.push((target - cars[0].p) / cars[0].s); //time it takes for closest car to finish (first fleet)
 
-    for(let i = 0; i < len; i++) {
-        let time = (target - sorted[i]) / map.get(sorted[i]);
-
-        if(time > lastTime)  {
-            fleets++;
-            lastTime = time;
-        }
+    for(let i = 1; i < cars.length; i++) {
+        let car = cars[i];
+        let timeToFinish = (target - car.p) / car.s;
+        if(timeToFinish > carTime[carTime.length - 1]) carTime.push(timeToFinish);
+        //takes longer means a new fleet, if faster than its stuck behind that car in one existing fleet
     }
-
-    return fleets;
+    return carTime.length; //different times = a fleet
 }
 
 console.log(carFleet(12, [10,8,0,5,3], [2,4,1,1,3])) //3
