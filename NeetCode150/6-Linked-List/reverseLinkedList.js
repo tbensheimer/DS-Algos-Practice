@@ -1,4 +1,4 @@
-var reverseList = function(head) {
+var reverseList = (head) => {
     let prev = null;
     let curr = head;
 
