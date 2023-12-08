@@ -1,21 +1,33 @@
 let addTwo = (l1, l2) => {
     let res = new ListNode();
-    let temp =  res;
+    let temp = res;
+    let sum = 0;
     let carry = 0;
 
     while(l1 || l2) {
-        let a = l1 && l1.val;
-        let b = l2 && l2.val;
-        let carry = Math.floor(sum/10);
-        
-        temp.next = new ListNode(sum%10);
+        sum = 0;
 
-        if(a) a = a.next;
-        if(b) b = b.next;
+        if(l1) {
+            sum += l1.val;
+            l1 = l1.next;
+        }
+
+        if(l2)  {
+            sum  += l2.val;
+            l2 = l2.next;
+        }
+
+        sum += carry;
+        carry = Math.floor(sum / 10);
+        sum = sum % 10;
+        temp.next = new ListNode(sum);
         temp = temp.next;
+
     }
 
-    if(carry > 0) temp.next = new ListNode(carry);
+    if(carry > 0) {
+        temp.next = new ListNode(carry);
+    }
 
     return res.next;
 }
